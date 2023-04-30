@@ -8,3 +8,14 @@ services:
     ports:
       - 5173:5173
     restart: always
+  game-api:
+    build:
+      context: ./game-api
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./game-api:/usr/src/app
+    ports:
+      - 8080:8080
+    restart: always
+      
+    
