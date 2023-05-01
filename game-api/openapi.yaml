@@ -19,6 +19,7 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                    description: Only valid value is true
                     enum:
                       - True
   /games:
@@ -32,8 +33,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Game'
+  /games/join_code/{join_code}/players:
+    post:
+      summary: Join game
+      description: Create a player in a game
+      parameters:
+        - in: path
+          name: join_code
+          schema:
+            type: string
+          required: True
+          description: Join code of game to join
+      requestBody:
+        description: Player information
+        required: True
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Name of new player
+      responses:
+        "200":
+          description: Game joined
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - game
+                  - player
+                properties:
+                  game:
+                    $ref: '#/components/schemas/Game'
+                    description: Details of joined game
+                  you:
+                    $ref: '#/components/schemas/Player'
+                    description: New user created by join for requester
+                  players:
+                    type: array
+                    description: Other players in game, not including you
+                    items:
+                      $ref: '#/components/schemas/Player'
+        "404":
+          description: Game with join code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Technical error description
     Game:
       type: object
       required:
@@ -42,5 +103,23 @@ components:
       properties:
         id:
           type: integer
+          description: Unique identifier
         join_code:
           type: string
+          description: Short code used by players to refer to game
+    Player:
+      type: object
+      required:
+        - id
+        - game_id
+        - name
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+        game_id:
+          type: integer
+          description: ID of game to which player belongs
+        name:
+          type: string
+          description: Human facing name of player
