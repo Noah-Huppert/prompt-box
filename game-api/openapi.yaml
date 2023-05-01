@@ -21,3 +21,26 @@ paths:
                     type: boolean
                     enum:
                       - True
+  /games:
+    post:
+      summary: Create Game
+      description: Create a new game
+      responses:
+        "200":
+          description: New game successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+components:
+  schemas:
+    Game:
+      type: object
+      required:
+        - id
+        - join_code
+      properties:
+        id:
+          type: integer
+        join_code:
+          type: string
