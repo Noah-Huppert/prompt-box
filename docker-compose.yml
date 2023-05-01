@@ -11,7 +11,9 @@ services:
   
   # Game API
   game-api-proxy:
-    image: lxlu/openapi-cop:v1.3.1
+    build:
+      context: ./game-api
+      dockerfile: dev-proxy.Dockerfile
     volumes:
       - ./game-api/openapi.yaml:/opt/game-api/openapi.yaml
     environment:
