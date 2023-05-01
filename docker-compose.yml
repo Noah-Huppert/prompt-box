@@ -8,14 +8,25 @@ services:
     ports:
       - 5173:5173
     restart: always
-  game-api:
+  
+  # Game API
+  game-api-proxy:
+    image: lxlu/openapi-cop:v1.3.1
+    volumes:
+      - ./game-api/openapi.yaml:/opt/game-api/openapi.yaml
+    environment:
+      - TARGET=http://game-api-target:8080
+      - FILE=/opt/game-api/openapi.yaml
+    ports:
+      - 8888:8888
+    restart: always
+  
+  game-api-target:
     build:
       context: ./game-api
       dockerfile: dev.Dockerfile
     volumes:
       - ./game-api:/usr/src/app
-    ports:
-      - 8080:8080
     restart: always
       
     

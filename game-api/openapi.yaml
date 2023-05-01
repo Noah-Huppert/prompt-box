@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: Game API
+  version: 0.0.1
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Endpoint which will always return successfully when the server is operational and ready for web traffic
+      responses:
+        "200":
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - ok
+                properties:
+                  ok:
+                    type: boolean
+                    enum:
+                      - True
