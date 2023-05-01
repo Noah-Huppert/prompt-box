@@ -17,4 +17,7 @@ To run the stack:
 docker compose up -d --build
 ```
 
-Then access the frontend on [127.0.0.1:5173](http://127.0.0.1:5173).
+Network endpoints:
+
+- Frontend: [127.0.0.1:5173](http://127.0.0.1:5173)
+- Backend: [127.0.0.1:8888](http://127.0.0.1:8888)
